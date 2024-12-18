@@ -1,0 +1,26 @@
+@use "../../src/styles/variables" as v;
+
+.btn-primary,
+.btn-success {
+  background-color: v.$color-primary;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  box-shadow: v.$shadow-default;
+
+  &:hover {
+    background-color: darken(v.$color-primary, 10%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: v.$font-family-primary;
+}

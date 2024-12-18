@@ -1,0 +1,5 @@
+@mixin uniform-img-size($height: 200px) {
+  width: 100%;
+  height: $height;
+  object-fit: cover;
+}

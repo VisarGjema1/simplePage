@@ -1,0 +1,16 @@
+@use "../../styles/variables" as v;
+
+footer {
+  background-color: v.$color-secondary;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+
+  a {
+    color: v.$color-primary;
+
+    &:hover {
+      color: lighten(v.$color-primary, 10%);
+    }
+  }
+}
