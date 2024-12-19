@@ -18,7 +18,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService // Inject AuthService
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,20 +30,17 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
-      // Use AuthService to validate login
       const isValidUser = this.authService.login(email, password);
 
       if (isValidUser) {
-        // Redirect based on user role
         const role = this.authService.getRole();
         if (role === 'admin') {
           this.router.navigate(['/adminDashboard']);
         } else if (role === 'user') {
-          this.router.navigate(['']); // Replace 'home' with your main site route
+          this.router.navigate(['']);
         }
       } else {
         console.log('Invalid credentials!');
-        // Optionally, show an error message to the user
       }
     }
   }
