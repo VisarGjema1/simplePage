@@ -11,7 +11,8 @@
     </div>
     <div class="row">
       <div class="col-md-6">
-        <form>
+        <!-- Bind the form to the Reactive FormGroup -->
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
           <div class="row">
             <div class="col-12">
               <div class="mb-3">
@@ -19,7 +20,18 @@
                   class="form-control bg-light"
                   placeholder="Full name"
                   type="text"
+                  formControlName="fullName"
                 />
+                <!-- Validation message for Full Name -->
+                <div
+                  *ngIf="
+                    contactForm.get('fullName')?.touched &&
+                    contactForm.get('fullName')?.invalid
+                  "
+                  class="text-danger"
+                >
+                  Full name is required.
+                </div>
               </div>
             </div>
             <div class="col-12">
@@ -28,7 +40,23 @@
                   class="form-control bg-light"
                   placeholder="Email address"
                   type="email"
+                  formControlName="email"
                 />
+                <!-- Validation message for Email -->
+                <div
+                  *ngIf="
+                    contactForm.get('email')?.touched &&
+                    contactForm.get('email')?.invalid
+                  "
+                  class="text-danger"
+                >
+                  <span *ngIf="contactForm.get('email')?.errors?.['required']">
+                    Email is required.
+                  </span>
+                  <span *ngIf="contactForm.get('email')?.errors?.['email']">
+                    Invalid email format.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-12">
@@ -37,12 +65,41 @@
                   class="form-control bg-light"
                   placeholder="Your message"
                   rows="5"
+                  formControlName="message"
                 ></textarea>
+                <!-- Validation message for Message -->
+                <div
+                  *ngIf="
+                    contactForm.get('message')?.touched &&
+                    contactForm.get('message')?.invalid
+                  "
+                  class="text-danger"
+                >
+                  <span
+                    *ngIf="contactForm.get('message')?.errors?.['required']"
+                  >
+                    Message is required.
+                  </span>
+                  <span
+                    *ngIf="contactForm.get('message')?.errors?.['minlength']"
+                  >
+                    Message must be at least 10 characters.
+                  </span>
+                  <span
+                    *ngIf="contactForm.get('message')?.errors?.['maxlength']"
+                  >
+                    Message cannot exceed 30 characters.
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-4">
               <div class="d-grid">
-                <button class="btn btn-primary" type="submit">
+                <button
+                  class="btn btn-primary"
+                  type="submit"
+                  [disabled]="contactForm.invalid"
+                >
                   Send message
                 </button>
               </div>
