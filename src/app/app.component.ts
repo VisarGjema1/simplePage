@@ -1,24 +1,9 @@
 import { Component } from '@angular/core';
-// import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../app/header/header.component';
-import { HeroComponent } from './hero/hero.component';
-import { AboutComponent } from './about/about.component';
-import { ProductsComponent } from './products/products.component';
-import { ContactComponent } from './contact/contact.component';
-import { FaqComponent } from './faq/faq.component';
-import { FooterComponent } from './footer/footer.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    HeaderComponent,
-    HeroComponent,
-    AboutComponent,
-    ProductsComponent,
-    ContactComponent,
-    FaqComponent,
-    FooterComponent,
-  ],
+  imports: [RouterOutlet, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

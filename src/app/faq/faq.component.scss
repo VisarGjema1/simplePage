@@ -1,15 +1,24 @@
 @use "../../styles/variables" as v;
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: v.$color-secondary;
-}
+#faq {
+  background-color: #353333;
+  color: #e0e0e0;
+  font-weight: bold;
 
-p {
-  line-height: 1.6;
-  color: v.$color-gray;
+  h2,
+  p {
+    color: #e0e0e0;
+    font-weight: bold;
+  }
+
+  .d-flex {
+    h5 {
+      color: cyan;
+      font-weight: bold;
+    }
+
+    p {
+      color: #e0e0e0;
+    }
+  }
 }
