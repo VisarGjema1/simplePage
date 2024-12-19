@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule], // Include CommonModule here
   template: `
     <div class="outer-container">
