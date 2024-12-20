@@ -1,0 +1,102 @@
+<div class="outer-container">
+  <div class="main">
+    <h2>Sign Up</h2>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-person"></i>
+        </div>
+        <input type="text" formControlName="username" placeholder="Username" />
+      </div>
+      <div
+        *ngIf="
+          signUpForm.get('username')?.invalid &&
+          signUpForm.get('username')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="signUpForm.get('username')?.hasError('required')"
+          >Username is required.</small
+        >
+        <small *ngIf="signUpForm.get('username')?.hasError('pattern')"
+          >Invalid username. Use 3-15 alphanumeric characters or
+          underscores.</small
+        >
+      </div>
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-envelope"></i>
+        </div>
+        <input type="email" formControlName="email" placeholder="Email" />
+      </div>
+      <div
+        *ngIf="
+          signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="signUpForm.get('email')?.hasError('required')"
+          >Email is required.</small
+        >
+        <small *ngIf="signUpForm.get('email')?.hasError('pattern')"
+          >Invalid email format.</small
+        >
+      </div>
+
+      <!-- Password Field -->
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-lock"></i>
+        </div>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </div>
+      <div
+        *ngIf="
+          signUpForm.get('password')?.invalid &&
+          signUpForm.get('password')?.touched
+        "
+        class="error"
+      >
+        <small *ngIf="signUpForm.get('password')?.hasError('required')"
+          >Password is required.</small
+        >
+        <small *ngIf="signUpForm.get('password')?.hasError('minlength')"
+          >Password must be at least 8 characters long.</small
+        >
+        <small *ngIf="signUpForm.get('password')?.hasError('pattern')">
+          Password must include at least one uppercase letter, one lowercase
+          letter, one number, and one special character.
+        </small>
+      </div>
+
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-lock"></i>
+        </div>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+        />
+      </div>
+      <div
+        *ngIf="signUpForm.get('confirmPassword')?.hasError('mismatch')"
+        class="error"
+      >
+        <small>Passwords do not match.</small>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="haveAccount">
+      <p>Already have an account? <a routerLink="/login">Login here</a>.</p>
+    </div>
+  </div>
+</div>

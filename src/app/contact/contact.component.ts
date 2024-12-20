@@ -26,7 +26,7 @@ export class ContactComponent {
         [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(30),
+          Validators.maxLength(200),
         ],
       ],
     });
@@ -34,7 +34,11 @@ export class ContactComponent {
 
   onSubmit(): void {
     if (this.contactForm.valid) {
+      const messages = JSON.parse(localStorage.getItem('messages') || '[]');
+      messages.push(this.contactForm.value);
+      localStorage.setItem('messages', JSON.stringify(messages));
       console.log('Form submitted successfully!', this.contactForm.value);
+      this.contactForm.reset();
     } else {
       console.log('Form is invalid!');
     }

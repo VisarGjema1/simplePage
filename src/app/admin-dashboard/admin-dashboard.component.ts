@@ -1,35 +1,44 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
-  imports: [CommonModule], // Include CommonModule in imports array
+  imports: [CommonModule],
 })
-export class AdminDashboardComponent {
-  totalUsers = 1200;
+export class AdminDashboardComponent implements OnInit {
+  totalUsers = 0;
   totalSales = 35000;
   newMessages = 15;
+  users: any[] = [];
+  messages: any[] = [];
 
-  recentActivities = [
-    { id: 1, user: 'John Doe', action: 'Logged in', date: '2024-12-19' },
-    {
-      id: 2,
-      user: 'Jane Smith',
-      action: 'Updated profile',
-      date: '2024-12-18',
-    },
-    {
-      id: 3,
-      user: 'Tom Brown',
-      action: 'Purchased a product',
-      date: '2024-12-17',
-    },
-  ];
+  constructor(private authService: AuthService, private router: Router) {}
 
-  logout() {
-    console.log('Logout triggered!');
-    // Implement your logout logic here
+  async ngOnInit(): Promise<void> {
+    await this.loadUsers();
+    this.loadMessages();
+  }
+
+  async loadUsers(): Promise<void> {
+    try {
+      await this.authService.loadUsers();
+      this.users = this.authService.getUsers();
+      this.totalUsers = this.users.length;
+    } catch (error) {
+      console.error('Error loading users', error);
+    }
+  }
+
+  loadMessages(): void {
+    this.messages = this.authService.getMessages();
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }
