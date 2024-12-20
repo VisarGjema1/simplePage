@@ -47,6 +47,25 @@
           </tbody>
         </table>
       </div>
+      <div class="table-container">
+        <h3>Messages</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let message of messages">
+              <td>{{ message.fullName }}</td>
+              <td>{{ message.email }}</td>
+              <td>{{ message.message }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

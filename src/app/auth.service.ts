@@ -16,20 +16,18 @@ export class AuthService {
   }
 
   // Load users from local storage or users.json asynchronously
-  loadUsers(): void {
+  async loadUsers(): Promise<void> {
     const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
       this.users = JSON.parse(storedUsers);
     } else {
-      this.http.get<any[]>(this.usersJsonUrl).subscribe(
-        (data) => {
-          this.users = data;
-          localStorage.setItem('users', JSON.stringify(this.users));
-        },
-        (error) => {
-          console.error('Error loading users from JSON', error);
-        }
-      );
+      try {
+        const data = await this.http.get<any[]>(this.usersJsonUrl).toPromise();
+        this.users = data || []; // Provide a default empty array if data is null or undefined
+        localStorage.setItem('users', JSON.stringify(this.users));
+      } catch (error) {
+        console.error('Error loading users from JSON', error);
+      }
     }
   }
 
@@ -77,5 +75,10 @@ export class AuthService {
   // Method to get all users
   getUsers(): any[] {
     return this.users;
+  }
+
+  // Method to get all messages
+  getMessages(): any[] {
+    return JSON.parse(localStorage.getItem('messages') || '[]');
   }
 }

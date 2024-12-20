@@ -14,20 +14,30 @@ export class AdminDashboardComponent implements OnInit {
   totalSales = 35000;
   newMessages = 15;
   users: any[] = [];
+  messages: any[] = [];
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.loadUsers();
+  async ngOnInit(): Promise<void> {
+    await this.loadUsers();
+    this.loadMessages();
   }
 
-  loadUsers(): void {
-    this.authService.loadUsers();
-    this.users = this.authService.getUsers();
-    this.totalUsers = this.users.length;
+  async loadUsers(): Promise<void> {
+    try {
+      await this.authService.loadUsers();
+      this.users = this.authService.getUsers();
+      this.totalUsers = this.users.length;
+    } catch (error) {
+      console.error('Error loading users', error);
+    }
   }
 
-  logout() {
+  loadMessages(): void {
+    this.messages = this.authService.getMessages();
+  }
+
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
   }
