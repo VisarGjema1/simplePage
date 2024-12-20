@@ -1,0 +1,86 @@
+<div class="outer-container">
+  <div class="main">
+    <h2>Sign Up</h2>
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-person"></i>
+        </div>
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+          required
+        />
+        <div
+          *ngIf="
+            signUpForm.get('username')?.invalid &&
+            signUpForm.get('username')?.touched
+          "
+        >
+          <small class="error">Username is required.</small>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-envelope"></i>
+        </div>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+          required
+        />
+        <div
+          *ngIf="
+            signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched
+          "
+        >
+          <small class="error">Valid email is required.</small>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-lock"></i>
+        </div>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          required
+        />
+        <div
+          *ngIf="
+            signUpForm.get('password')?.invalid &&
+            signUpForm.get('password')?.touched
+          "
+        >
+          <small class="error">Password is required.</small>
+        </div>
+      </div>
+      <div class="input-group">
+        <div class="input-icon">
+          <i class="bi bi-lock"></i>
+        </div>
+        <input
+          type="password"
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+          required
+        />
+        <div
+          *ngIf="
+            signUpForm.get('confirmPassword')?.invalid &&
+            signUpForm.get('confirmPassword')?.touched
+          "
+        >
+          <small class="error">Confirm Password is required.</small>
+        </div>
+      </div>
+      <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+    </form>
+    <div class="haveAccount">
+      <p>Already have an account? <a routerLink="/login">Login here</a>.</p>
+    </div>
+  </div>
+</div>

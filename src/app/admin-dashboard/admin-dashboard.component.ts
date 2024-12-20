@@ -1,35 +1,34 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
-  imports: [CommonModule], // Include CommonModule in imports array
+  imports: [CommonModule],
 })
-export class AdminDashboardComponent {
-  totalUsers = 1200;
+export class AdminDashboardComponent implements OnInit {
+  totalUsers = 0;
   totalSales = 35000;
   newMessages = 15;
+  users: any[] = [];
 
-  recentActivities = [
-    { id: 1, user: 'John Doe', action: 'Logged in', date: '2024-12-19' },
-    {
-      id: 2,
-      user: 'Jane Smith',
-      action: 'Updated profile',
-      date: '2024-12-18',
-    },
-    {
-      id: 3,
-      user: 'Tom Brown',
-      action: 'Purchased a product',
-      date: '2024-12-17',
-    },
-  ];
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.loadUsers();
+  }
+
+  loadUsers(): void {
+    this.authService.loadUsers();
+    this.users = this.authService.getUsers();
+    this.totalUsers = this.users.length;
+  }
 
   logout() {
-    console.log('Logout triggered!');
-    // Implement your logout logic here
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

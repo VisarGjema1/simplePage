@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,17 +15,22 @@ export class AuthService {
     this.loadUsers();
   }
 
-  // Load users from users.json asynchronously
-  private loadUsers(): void {
-    this.http.get<any[]>(this.usersJsonUrl).subscribe(
-      (data) => {
-        this.users = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error('Error loading users from JSON', error);
-      }
-    );
+  // Load users from local storage or users.json asynchronously
+  loadUsers(): void {
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      this.users = JSON.parse(storedUsers);
+    } else {
+      this.http.get<any[]>(this.usersJsonUrl).subscribe(
+        (data) => {
+          this.users = data;
+          localStorage.setItem('users', JSON.stringify(this.users));
+        },
+        (error) => {
+          console.error('Error loading users from JSON', error);
+        }
+      );
+    }
   }
 
   // Login method to check the email and password
@@ -55,5 +60,22 @@ export class AuthService {
   // Check if the user is logged in
   isLoggedIn(): boolean {
     return this.currentUser !== null;
+  }
+
+  // Register method to add a new user
+  register(username: string, email: string, password: string): Observable<any> {
+    const userExists = this.users.some((u) => u.email === email);
+    if (userExists) {
+      return of({ success: false, message: 'User already exists' });
+    }
+    const newUser = { username, email, password, role: 'user' };
+    this.users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(this.users));
+    return of({ success: true, message: 'User registered successfully' });
+  }
+
+  // Method to get all users
+  getUsers(): any[] {
+    return this.users;
   }
 }
