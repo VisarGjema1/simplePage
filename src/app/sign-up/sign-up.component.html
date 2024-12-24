@@ -23,6 +23,7 @@
           underscores.</small
         >
       </div>
+
       <div class="input-group">
         <div class="input-icon">
           <i class="bi bi-envelope"></i>
@@ -43,7 +44,6 @@
         >
       </div>
 
-      <!-- Password Field -->
       <div class="input-group">
         <div class="input-icon">
           <i class="bi bi-lock"></i>
@@ -90,11 +90,8 @@
         <small>Passwords do not match.</small>
       </div>
 
-      <!-- Submit Button -->
       <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
     </form>
-
-    <!-- Login Link -->
     <div class="haveAccount">
       <p>Already have an account? <a routerLink="/login">Login here</a>.</p>
     </div>
